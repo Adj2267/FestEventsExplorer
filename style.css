@@ -93,15 +93,15 @@ body {
 
 #events-container {
     flex: 3;
-    min-width: 300px;
+    display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    min-width: 300px;
 }
 
 .event-card {
-    flex: 1 1 250px;
+    flex: 1 1 280px;
     background-color: #191919;
-    max-width: 500px;
     padding: 15px;
     border-radius: 8px;
 }
@@ -169,4 +169,3 @@ body {
 .favorites-item:last-child {
     border-bottom: none;
 }
-
