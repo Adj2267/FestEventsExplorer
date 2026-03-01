@@ -20,6 +20,37 @@ function applyFilters() {
     return list;
 }
 
+function getMostPopularCategory() {
+    const categoryCounts = {};
+    events.forEach(e => {
+        if (!categoryCounts[e.category]) {
+            categoryCounts[e.category] = 0;
+        }
+        categoryCounts[e.category] += e.registrations;
+    });
+    let mostPopular = 'N/A';
+    let maxRegistrations = 0;
+    for (const category in categoryCounts) {
+        if (categoryCounts[category] > maxRegistrations) {
+            maxRegistrations = categoryCounts[category];
+            mostPopular = category;
+        }
+    }
+    return mostPopular;
+}
+
+function renderStats() {
+    const totalEvents = events.length;
+    const totalRegistrations = events.reduce((sum, e) => sum + e.registrations, 0);
+    const statsContainer = document.getElementById('stats-container');
+    statsContainer.innerHTML = `
+        <p><strong>Total Events:</strong> ${totalEvents}</p>
+        <p><strong>Total Registrations:</strong> ${totalRegistrations}</p>
+        <p><strong>Most Popular Category:</strong> ${getMostPopularCategory()}</p>
+    `;
+}
+renderStats();
+
 function renderEvents(eventsList) {
     if (eventsList.length === 0) {
         eventsContainer.innerHTML = '<h3>No events found. Try a different search!</h3>';
@@ -64,8 +95,9 @@ sortSelect.addEventListener('change', e => {
     renderEvents(applyFilters());
 });
 
-let myLineup = [];
 const favouritesContainer = document.getElementById('favourites-container');
+
+let myLineup = [];
 
 function renderLineup() {
     if (myLineup.length === 0) {
@@ -76,7 +108,7 @@ function renderLineup() {
         return `
             <div class="lineup-item">
                 <h4>${event.name}</h4>
-                <p>Day ${event.day} | ${event.time}</p>
+                <p>Venue: ${event.venue} | Day ${event.day} | Time: ${event.time}</p>
                 <button class="remove-btn" data-id="${event.id}">Remove</button>
             </div>
         `;
@@ -94,8 +126,6 @@ eventsContainer.addEventListener('click', (event) => {
             renderLineup();
             event.target.textContent = 'Saved!';
             event.target.disabled = true;
-        } else {
-            alert('Event already in lineup');
         }
     }
 });

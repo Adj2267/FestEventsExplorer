@@ -11,12 +11,17 @@
 <body>
     <header>
         <h1>Fest Events Explorer</h1>
+        <div id = "header">
         <input type="text" id="search-input" placeholder="Search for events..." />
+        <div id = "stats-container">
+            <p id="total-events">Total Events: 0</p>
+            <p id="filtered-events">Filtered Events: 0</p>
+        </div>
     </header>
 
     <section id = "controls">
         <div id = "filter-buttons">
-            <button class="filter-btn" data-category="all">All</button>
+            <button class="filter-btn active" data-category="all">All</button>
             <button class="filter-btn" data-category="music">Music</button>
             <button class="filter-btn" data-category="tech">Tech</button>
             <button class="filter-btn" data-category="dance">Dance</button>
